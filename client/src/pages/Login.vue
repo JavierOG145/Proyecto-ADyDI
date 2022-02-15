@@ -9,18 +9,18 @@
               <q-icon name="account_circle" />
             </template>
           </q-input>
-          <q-input v-model="Password" square filled label="Contrasenya" class="q-mb-sm" color="positive" :type="passwordFieldType" lazy-rules :rules="[required, short]">
+          <q-input v-model="password" square filled label="Contrasenya" class="q-mb-sm" color="positive" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[required, short]">
             <template #prepend>
               <q-icon name="lock" />
             </template>
             <template #append>
-              <q-icon :name="visibilityIcon" class="cursor-pointer" @click="switchVisibility" />
+              <q-icon :name="isPwd ? 'visibility_off':'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
             </template>
           </q-input>
           <q-btn color="primary" class="full-width" label="Login" @click="login" />
           <div class="q-my-sm text-center">
             No estàs registrat?
-            <a href="http://localhost:8080/#/Formulari" class="text-primary"
+            <a href="http://localhost:8080/#formulari" class="text-primary"
               >Registra't</a
             >
           </div>
@@ -67,6 +67,7 @@ export default defineComponent({
       passwordFieldType: 'password',
       visibility: false,
       visibilityIcon: 'visibility',
+      isPwd: (true),
       alert: ref(false)
     }
   }

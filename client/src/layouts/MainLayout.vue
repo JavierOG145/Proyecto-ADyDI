@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="drawerState = !drawerState"
         />
 
         <q-toolbar-title>
@@ -69,6 +69,14 @@ export default defineComponent({
   },
 
   computed: {
+    drawerState: {
+      get () {
+        return this.$store.state.showcase.drawerState
+      },
+      set (val) {
+        this.$store.commit('showcase/updateDrawerState', val)
+      }
+    },
     fecha () {
       const meses = ['Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Septembre', 'Octubre', 'Novembre', 'Desembre']
       const hoy = new Date()
@@ -89,5 +97,6 @@ export default defineComponent({
       }
     }
   }
+
 })
 </script>

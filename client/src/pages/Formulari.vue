@@ -12,8 +12,15 @@
               <q-icon name="perm_identity" />
             </template>
           </q-input>
-          <q-input v-model="DNI" class="q-mb-sm"
+          <q-input v-model="Dni" class="q-mb-sm"
             color="positive" lazy-rules :rules="[required, isDNI, short]" label="DNI"
+          >
+            <template #prepend>
+              <q-icon name="badge" />
+            </template>
+          </q-input>
+          <q-input v-model="Email" class="q-mb-sm"
+            color="positive" lazy-rules :rules="[required, isEmail, short]" label="Email"
           >
             <template #prepend>
               <q-icon name="badge" />
@@ -26,33 +33,27 @@
               <q-icon name="account_circle" />
             </template>
           </q-input>
-          <q-input v-model="Contraseña" class="q-mb-sm"
-            color="positive" :type="passwordFieldType" lazy-rules :rules="[required, short]" label="Password"
-          >
+
+          <q-input v-model="password" label="Contrasenya" class="q-mb-sm"
+            color="positive" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[required, short]">
             <template #prepend>
               <q-icon name="lock" />
             </template>
             <template #append>
-              <q-icon
-                :name="visibilityIcon"
-                class="cursor-pointer"
-                @click="switchVisibility"
-              />
+              <q-icon :name="isPwd ? 'visibility_off':'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input v-model="reContraseña" square filled label="Repeat Password" class="q-mb-sm" placeholder="Repeat Password"
-            color="positive" :type="passwordFieldType" lazy-rules :rules="[required, diffPassword, short]" >
+
+          <q-input v-model="repassword" label="Repite Contrasenya" class="q-mb-sm"
+            color="positive" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[required,  diffPassword, short]">
             <template #prepend>
               <q-icon name="lock" />
             </template>
             <template #append>
-              <q-icon
-                :name="visibilityIcon"
-                class="cursor-pointer"
-                @click="switchVisibility"
-              />
+              <q-icon :name="isPwd ? 'visibility_off':'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
             </template>
           </q-input>
+
           <q-btn
             class="full-width"
             color="primary"
@@ -92,7 +93,7 @@ export default {
       },
       diffPassword (val) {
         return (
-          (val && val === this.Contraseña) || 'Contrasenyes distintes'
+          (val && val === this.password) || 'Contrasenyes distintes'
         )
       },
       short (val) {
@@ -110,7 +111,10 @@ export default {
       isEmail (val) {
         const emailPattern =
           /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/
-        return emailPattern.test(val) || 'Error Email'
+        return (
+          emailPattern.test(val) ||
+          'Error Email'
+        )
       },
       switchVisibility () {
         this.visibility = !this.visibility
@@ -122,13 +126,15 @@ export default {
   data () {
     return {
       Nombre: '',
-      DNI: '',
+      Dni: '',
+      Email: '',
       Usuario: '',
-      Contraseña: '',
-      reContraseña: '',
+      password: '',
+      repassword: '',
       passwordFieldType: 'password',
       visibility: false,
-      visibilityIcon: 'visibility'
+      visibilityIcon: 'visibility',
+      isPwd: (true)
     }
   },
   methods: {}
