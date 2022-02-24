@@ -14,7 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
-require("./app/routes/tutorial.routes.js")(app);
+//require("./app/routes/tutorial.routes.js")(app);
+require("./app/routes/user.router.js")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
